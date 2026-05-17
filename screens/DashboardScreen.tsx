@@ -13,6 +13,10 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../constants/colors';
 import type { RootStackParamList, MainTabParamList } from '../navigation/AppNavigator';
+import { supabase } from '../lib/supabase';
+// import __CURRENT_ACCOUNT__ from './LoginScreen'
+// import __FIRST_NAME__ from './LoginScreen'
+
 
 type Nav = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, 'Home'>,
@@ -30,13 +34,16 @@ export default function DashboardScreen() {
     navigation.navigate('Insights');
   };
 
+ 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      
+
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.greeting}>Welcome, Lisa</Text>
+        <Text style={styles.greeting}>Welcome</Text>
 
         <View style={styles.heroCard}>
           <Text style={styles.heroTitle}>Ready to track your day?</Text>

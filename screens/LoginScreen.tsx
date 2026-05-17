@@ -17,13 +17,13 @@ import { supabase } from '../lib/supabase';
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type Mode = 'welcome' | 'signup';
 
-
+// declare var __CURRENT_ACCOUNT__: number;
+// declare var __FIRST_NAME__ : string
 
 export default function LoginScreen()  {
 
   async function makeAccount(first: string, last: string, email: string, password: string) {
      
-
       try {
         const { data } = await supabase.from('loginDetails').select('*'); 
         
@@ -36,6 +36,9 @@ export default function LoginScreen()  {
           password: password,
           id: newID
         })
+
+        // __CURRENT_ACCOUNT__ = newID;
+        // __NAME__ = first;
   
       } catch (error) {
         console.error(error);

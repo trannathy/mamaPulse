@@ -16,6 +16,8 @@ type Nav = NativeStackNavigationProp<RootStackParamList, 'LogVitals'>;
 type CardType = 'bloodPressure' | 'heartRate' | 'bloodSugar' | null;
 type TimeOfDay = 'morning' | 'noon' | 'evening';
 
+const API = 'http://127.0.0.1:8000'
+
 export default function LogVitalsScreen() {
   const navigation = useNavigation<Nav>();
   const [expandedCard, setExpandedCard] = useState<CardType>(null);
@@ -30,9 +32,40 @@ export default function LogVitalsScreen() {
     setExpandedCard((current) => (current === card ? null : card));
   };
 
-  const handleSave = () => {
-    setExpandedCard(null);
-    navigation.goBack();
+  const handleSave = async (card: Exclude<CardType, null>) => {
+    try {
+      if (card === 'bloodPressure') {
+        await fetch(`${API}/logBP/1`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systolic: Number(systolic),
+            diastolic: Number(diastolic),
+          }),
+        });
+      } else if (card === 'heartRate') {
+        await fetch(`${API}/logHR/1`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bpm: Number(bpm),
+          }),
+        });
+      } else if (card === 'bloodSugar') {
+        await fetch(`${API}/logBS/1`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bloodSugar: Number(bloodSugar),
+          }),
+        });
+      }
+
+      setExpandedCard(null);
+      navigation.goBack();
+    } catch (error) {
+      console.error('Failed to save:', error);
+    }
   };
 
   const renderTimeToggle = (
@@ -163,7 +196,7 @@ export default function LogVitalsScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave} activeOpacity={0.85}>
+        <TouchableOpacity style={styles.saveButton} onPress={() => expandedCard && handleSave(expandedCard)} activeOpacity={0.85}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </View>

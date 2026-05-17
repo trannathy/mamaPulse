@@ -176,7 +176,7 @@ export default function ComplicationsScreen() {
     isSetBoolean(lupus) &&
     isSetBoolean(copd) &&
     isSetBoolean(cancer) &&
-    (isBooleanFalse(cancer) || cancerTypes.length > 0);
+    (isBooleanFalse(cancer) && cancerTypes.length > 0);
 
   const handleSubmit = async () => {
     
