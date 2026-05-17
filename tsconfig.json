@@ -1,0 +1,18 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "App.tsx",
+    "babel.config.js",
+    "constants/**/*.ts",
+    "utils/**/*.ts",
+    "navigation/**/*.tsx",
+    "screens/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "src"]
+}

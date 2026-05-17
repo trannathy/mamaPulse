@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "MamaPulse",
+    "slug": "mamapulse",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F5F1E8"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mamapulse.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F1E8"
+      },
+      "package": "com.mamapulse.app"
+    }
+  }
+}
