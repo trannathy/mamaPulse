@@ -36,7 +36,7 @@ export default function DashboardScreen() {
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.greeting}>Welcome, Sarah</Text>
+        <Text style={styles.greeting}>Welcome, Lisa</Text>
 
         <View style={styles.heroCard}>
           <Text style={styles.heroTitle}>Ready to track your day?</Text>

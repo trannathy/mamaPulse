@@ -13,31 +13,18 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../constants/colors';
 import type { RootStackParamList, MainTabParamList } from '../navigation/AppNavigator';
+import { useEffect, useState } from 'react';
 
 type Nav = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, 'Community'>,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const FRIENDS = [
-  { name: 'Emma S', initials: 'ES' },
-  { name: 'Lisa M', initials: 'LM' },
-  { name: 'Anna J', initials: 'AJ' },
-];
-
-const LEADERBOARD = [
-  { rank: 1, username: 'Emma S', points: 2450 },
-  { rank: 2, username: 'You', points: 2180 },
-  { rank: 3, username: 'Lisa M', points: 1890 },
-  { rank: 4, username: 'Anna J', points: 1650 },
-  { rank: 5, username: 'Sophie T', points: 1420 },
-];
+const API = 'http://127.0.0.1:8000'
 
 const FRIEND_PHOTOS = [
   { name: 'Emma S', initials: 'ES', task: 'Daily Walk', emoji: '🚶‍♀️', time: '2h ago' },
-  { name: 'Lisa M', initials: 'LM', task: 'Hydration', emoji: '💧', time: '5h ago' },
-  { name: 'Anna J', initials: 'AJ', task: 'Meditation', emoji: '🧘‍♀️', time: '1d ago' },
-  { name: 'Sophie T', initials: 'ST', task: 'Daily Walk', emoji: '🚶‍♀️', time: '2d ago' },
+  { name: 'Sarah L', initials: 'SL', task: 'Hydration', emoji: '💧', time: '5h ago' },
 ];
 
 function rankColor(rank: number): string {
@@ -50,6 +37,43 @@ function rankColor(rank: number): string {
 export default function CommunityScreen() {
   const navigation = useNavigation<Nav>();
 
+  const [friends, setFriends] = useState<any[] | null>(null);
+  const [leaderboard, setLeaderboard] = useState<any[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [friendsRes, leaderboardRes] = await Promise.all([
+          fetch(`${API}/friends?id=1`),
+          fetch(`${API}/leaderboard?id=1`),
+        ]);
+
+        if (!friendsRes.ok || !leaderboardRes.ok) throw new Error('Request failed');
+
+        const [friendsJson, leaderboardJson] = await Promise.all([
+          friendsRes.json(),
+          leaderboardRes.json(),
+        ]);
+
+        setFriends(friendsJson);
+        setLeaderboard(leaderboardJson);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const goAddFriend = () => {
     navigation.navigate('AddFriend');
   };
@@ -57,6 +81,14 @@ export default function CommunityScreen() {
   const goApproveFriend = () => {
     navigation.navigate('ApproveFriend');
   };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>{error}</Text>;
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -73,7 +105,7 @@ export default function CommunityScreen() {
         <Text style={styles.title}>Your community</Text>
 
         <View style={styles.friendsRow}>
-          {FRIENDS.map((friend) => (
+          {friends.map((friend) => (
             <View key={friend.name} style={styles.friendItem}>
               <View style={styles.friendAvatar}>
                 <Text style={styles.friendInitials}>{friend.initials}</Text>
@@ -113,13 +145,13 @@ export default function CommunityScreen() {
 
         <Text style={styles.sectionTitle}>Leaderboard</Text>
         <View style={styles.leaderboardCard}>
-          {LEADERBOARD.map((entry, index) => (
+          {leaderboard.map((entry, index) => (
             <View
               key={entry.rank}
               style={[
                 styles.leaderboardRow,
-                entry.username === 'You' && styles.leaderboardRowHighlight,
-                index < LEADERBOARD.length - 1 && styles.leaderboardRowBorder,
+                entry.name === 'You' && styles.leaderboardRowHighlight,
+                index < leaderboard.length - 1 && styles.leaderboardRowBorder,
               ]}
             >
               <View style={styles.leaderboardLeft}>
@@ -129,10 +161,10 @@ export default function CommunityScreen() {
                 <Text
                   style={[
                     styles.leaderboardName,
-                    entry.username === 'You' && styles.leaderboardNameBold,
+                    entry.name === 'You' && styles.leaderboardNameBold,
                   ]}
                 >
-                  {entry.username}
+                  {entry.name}
                 </Text>
               </View>
               <Text style={styles.leaderboardPoints}>
