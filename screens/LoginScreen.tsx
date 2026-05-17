@@ -67,7 +67,6 @@ export default function LoginScreen()  {
       setEmail;
       setPassword;
 
-      let allow_through = false;
       makeAccount(firstName, lastName, email, password);
       navigation.navigate('Complications');
       
