@@ -21,6 +21,7 @@ import {
   setProfileData,
   type ProfileData,
 } from '../utils/storage';
+import { supabase } from '../lib/supabase';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Complications'>;
 
@@ -71,6 +72,48 @@ function YesNoCards({
 }
 
 export default function ComplicationsScreen() {
+
+  // THE FOLLOWING FUNCTION FILLS IN THE PATIENT DATA INTO THE PATIENT TABLE. HOWEVER, REQUIRES A GLOBAL VARIABLE TO RUN, AND IS THIS COMMENTED OUT
+
+  // async function makePatient(dob: string,
+  //                           smokingStatus: boolean,
+  //                           raceEthnicity: boolean,
+  //                           diabetes: boolean,
+  //                           artialFib: boolean,
+  //                           renalFailure: boolean,
+  //                           migraines: boolean,
+  //                           corticosteroid: boolean,
+  //                           lupus: boolean,
+  //                           cancer: boolean,
+  //                           cancerTypes: string[]) {
+       
+  
+  //       try {
+  
+  //         const currentID = 0  //replace with updating global variable
+
+  //         const { error } = await supabase.from('loginDetails').insert({
+  //           id: currentID,
+  //           dob: dob.toISOString().split('T')[0],   // need to change to input as a date
+  //           smokingStatus: smokingStatus,
+  //           raceEthnicity: raceEthnicity,
+  //           diabetes: diabetes,
+  //           artialFib: artialFib,
+  //           renalFailure: renalFailure,
+  //           migraines: migraines,
+  //           corticosteroid: corticosteroid,
+  //           lupus: lupus,
+  //           cancer: cancer,
+  //           cancerTypes: cancerTypes
+  //       })
+    
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  
+  
+    // }
+
   const navigation = useNavigation<Nav>();
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [smokingStatus, setSmokingStatus] = useState<boolean | null>(null);
@@ -136,7 +179,20 @@ export default function ComplicationsScreen() {
     (isBooleanFalse(cancer) || cancerTypes.length > 0);
 
   const handleSubmit = async () => {
-    if (!isFormValid) return;
+    
+    setDateOfBirth
+    setSmokingStatus
+    setRaceEthnicity
+    setDiabetes
+    setAtrialFib
+    setRenalFailure
+    setMigraines
+    setCorticosteroid
+    setLupus
+    setCopd
+    setCancer
+    setCancerTypes
+
     const profileData: ProfileData = {
       dateOfBirth,
       smokingStatus,
@@ -151,6 +207,7 @@ export default function ComplicationsScreen() {
       cancer,
       cancerTypes,
     };
+
     await setOnboardingComplete(true);
     await setProfileData(profileData);
     navigation.reset({
@@ -287,6 +344,14 @@ export default function ComplicationsScreen() {
         >
           <Text style={styles.submitButtonText}>Continue</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.submitButton]}
+          onPress={handleSubmit}
+          activeOpacity={0.85}
+        >
+          <Text style={styles.submitButtonText}>Fill Out Later</Text>
+        </TouchableOpacity>
+        
       </ScrollView>
     </SafeAreaView>
   );

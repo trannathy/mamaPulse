@@ -18,6 +18,9 @@
         "backgroundColor": "#F5F1E8"
       },
       "package": "com.mamapulse.app"
-    }
+    },
+    "plugins": [
+      "expo-sqlite"
+    ]
   }
 }

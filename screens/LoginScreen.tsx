@@ -12,11 +12,38 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../constants/colors';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { supabase } from '../lib/supabase';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 type Mode = 'welcome' | 'signup';
 
-export default function LoginScreen() {
+
+
+export default function LoginScreen()  {
+
+  async function makeAccount(first: string, last: string, email: string, password: string) {
+     
+
+      try {
+        const { data } = await supabase.from('loginDetails').select('*'); 
+        
+        const newID = data.length + 1;
+
+        const { error } = await supabase.from('loginDetails').insert({
+          firstName: first,
+          lastName: last,
+          email: email,
+          password: password,
+          id: newID
+        })
+  
+      } catch (error) {
+        console.error(error);
+      }
+
+
+  }
+
   const navigation = useNavigation<Nav>();
   const [mode, setMode] = useState<Mode>('welcome');
   const [firstName, setFirstName] = useState('');
@@ -33,7 +60,21 @@ export default function LoginScreen() {
   };
 
   const submitSignUp = () => {
-    navigation.navigate('Complications');
+
+    try {
+      setFirstName;
+      setLastName;
+      setEmail;
+      setPassword;
+
+      let allow_through = false;
+      makeAccount(firstName, lastName, email, password);
+      navigation.navigate('Complications');
+      
+    }
+    catch (error) {
+      console.error(error)
+    }
   };
 
   const isSignUpValid =
