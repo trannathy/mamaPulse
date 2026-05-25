@@ -1,11 +1,23 @@
+## Inspiration
+In California, over 80% of maternal deaths are preventable” (Office of the California Surgeon General, Strong Start & Beyond), and heart-related complications are one of the most prevalent contributors. The most alarming part is the lack of awareness. We believe that heart health among women is an issue we need to tackle as a community. Our vision is to empower pregnant people to take actionable steps toward becoming the healthiest versions of themselves, while building a lasting community to rely on throughout pregnancy and long after.
 
-  # MamaPulse Frontend
+## What it does
+From a medical perspective, MamaPulse empowers women to take the initiative to monitor their blood pressure, heart rate, and blood sugar. Using this data, our program is able to alert users about their risk levels for cardiovascular disease. However, diagnostic and screening information has little significance without actionable next steps. MamaPulse provides goals, which we call weekly missions, customized for each user’s heart health journey. Completing a mission is easy. Users simply snap a picture and upload! Our generation of mothers is active on social media, so we strived to embed a culture of sharing without overstepping privacy boundaries. Users can add friends to their circle, share photos, and compete for the top spot on the leaderboard.
 
-  This is a code bundle for MamaPulse Frontend. The original project is available at https://www.figma.com/design/YTawgHCZzHHsxkwrTGA5Va/MamaPulse-Frontend.
+## How we built it
+We built a machine learning model using scikit-learn and classified each user's cardiovascular disease risk as Low, Medium, or High based on their health history inputs including age and logged vitals data. For the backend, we used Supabase for user authentication and data storage, structuring our database to store user health profiles, vitals entries, and onboarding data. The frontend was built in React Native with Expo, converting our Figma designs into a fully navigable mobile app. We built multiple screens including onboarding, vitals logging, personalized insights, weekly missions, and a community leaderboard. For our design, we started by creating low and mid fidelity wireframes in Figma to map out the user flow and screen layouts. From there, we produced high fidelity designs using Figma Make, establishing a warm visual identity with a custom color palette intentionally chosen to feel supportive rather than clinical.
 
-  ## Running the code
+## Challenges we ran into
+Our primary challenge was refining our idea during the first day of the hackathon. After listening to the opening ceremony and learning from Surgeon General, Diana E. Ramos, we knew evolving our idea was necessary. We pivoted several times to beyond creating a basic healthcare app and instead built something that felt meaningful, engaging, and different from existing solutions. Throughout the process, we constantly exchanged ideas and evaluated how to best serve our target audience. We decided to focus on three core values: community, engagement, and wellbeing. This led us to create an app where women feel comfortable sharing their heart health journey while also encouraging healthy habits through gamification. We wanted to address a topic that can often feel overwhelming or difficult to acknowledge in a way that feels supportive, interactive, and approachable.
 
-  Run `npm i` to install the dependencies.
+## Accomplishments that we're proud of
+This was an incredibly unique learning experience for our team. Half of our members are first-year students attending their very first hackathon, while the others brought prior experience to the project. One of our proudest accomplishments was building a cohesive project while finding meaningful ways for every team member to contribute using their individual strengths.
 
-  Run `npm run dev` to start the development server.
-  
+## What we learned
+We learned how to quickly adapt to new technologies and development challenges throughout the hackathon. One of our biggest technical learning experiences was learning how to use React Native to support the mobile framework for our app. We also gained experience integrating our UI/UX designs from Figma into a functional application and working with a machine learning model.
+
+## What's next for MamaPulse
+For MamaPulse, ensuring inclusivity and the ability to serve a diverse population, like California, is vital to achieving our mission. Ideally, we would like to expand our project to be multilingual in order to broaden its impact. “Hispanic individuals represent 48% of all births in California and face increased rates of chronic disease, including heart disease and diabetes” (Office of the California Surgeon General [OSG], 2024, p. 7). Thus, expanding our accessibility by removing language barriers will ensure a more equitable opportunity. Additionally, education is a key factor in addressing this problem. We aim to integrate educational resources directly into our app, such as short instructional videos that demonstrate how to properly measure blood pressure and explain what the readings mean in context.
+
+
+**Note:** This is not a complete product and is not connected to a real database, but is rather meant to be used as a conceptual model. Do not enter personal information into the database, as it is currently public.
